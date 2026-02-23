@@ -1,0 +1,363 @@
+/* Real-time Interview Layout */
+.interview-container {
+    display: flex;
+    height: 100vh;
+    background-color: #0f172a;
+    /* Darker bg for cinematic feel */
+    color: white;
+    overflow: hidden;
+}
+
+/* Sidebar Info (Dark Theme) */
+.interview-sidebar {
+    width: 320px;
+    background: #1e293b;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.interview-header h2 {
+    color: #f8fafc;
+}
+
+.interview-header p {
+    color: #94a3b8;
+}
+
+.detail-item label {
+    color: #64748b;
+}
+
+.detail-item p {
+    color: #e2e8f0;
+}
+
+/* Main AI Area */
+.ai-area {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+}
+
+/* User Camera Feed (Picture-in-Picture style) */
+.user-video-container {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: 280px;
+    height: 160px;
+    background: black;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    border: 2px solid #334155;
+    z-index: 20;
+}
+
+.user-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    /* Mirror effect */
+}
+
+/* AI Orb Animation */
+.ai-avatar-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-orb {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    box-shadow: 0 0 50px rgba(99, 102, 241, 0.5);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Animation States */
+.ai-orb.listening {
+    transform: scale(1.1);
+    box-shadow: 0 0 80px rgba(99, 102, 241, 0.8);
+    animation: breathe 3s infinite ease-in-out;
+}
+
+.ai-orb.speaking {
+    animation: speak 1s infinite alternate;
+}
+
+.ai-orb.processing {
+    background: linear-gradient(135deg, #ef4444, #f59e0b);
+    animation: spin 2s linear infinite;
+}
+
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+@keyframes speak {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+    }
+
+    100% {
+        transform: scale(1.1);
+        box-shadow: 0 0 70px rgba(168, 85, 247, 0.8);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Audio Visualizer Waves (Decoration) */
+.audio-wave {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    animation: ripple 2s infinite linear;
+    opacity: 0;
+}
+
+.audio-wave:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.audio-wave:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Live Transcript Overlay */
+.transcript-overlay {
+    /* Hide transcript as requested */
+    display: none;
+}
+
+/* Controls */
+.controls-bar {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.5rem;
+    background: rgba(30, 41, 59, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    border: 1px solid #475569;
+    backdrop-filter: blur(10px);
+    z-index: 20;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: #334155;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    background: #475569;
+}
+
+.control-btn.active {
+    background: #ef4444;
+    /* Red for 'Stop' or 'Mute' */
+}
+
+.control-btn.mic-active {
+    background: #6366f1;
+    /* Indigo for listening */
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Result Modal */
+.result-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1e293b;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    width: 600px;
+    max-width: 90vw;
+    color: white;
+    z-index: 100;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid #475569;
+}
+
+.score-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(#4ade80 calc(var(--score) * 10%), #334155 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+.score-circle::before {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: #1e293b;
+    border-radius: 50%;
+}
+
+.score-text {
+    position: relative;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #4ade80;
+}
+
+.feedback-section {
+    margin-bottom: 2rem;
+}
+
+.feedback-section h3 {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.feedback-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feedback-list li {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feedback-list.strengths li {
+    border-left: 3px solid #4ade80;
+}
+
+.feedback-list.improvements li {
+    border-left: 3px solid #f87171;
+}
+
+.report-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background: #6366f1;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    background: #4f46e5;
+}
+/* Visual Mic Indicator */
+.mic-indicator-overlay {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mic-bars {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 15px;
+}
+
+.mic-bars span {
+    width: 3px;
+    background: #4ade80;
+    animation: sound 0.5s infinite ease-in-out alternate;
+}
+
+.mic-bars span:nth-child(1) { height: 60%; animation-delay: 0s; }
+.mic-bars span:nth-child(2) { height: 100%; animation-delay: 0.1s; }
+.mic-bars span:nth-child(3) { height: 80%; animation-delay: 0.2s; }
+
+@keyframes sound {
+    0% { height: 30%; }
+    100% { height: 100%; }
+}

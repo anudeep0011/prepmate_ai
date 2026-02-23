@@ -1,0 +1,10 @@
+file:///C:/Users/ANUDEEP/OneDrive/Desktop/PrepMateAI/server/routes/interviewRoutes.js:6
+import pdf from 'pdf-parse';
+       ^^^
+SyntaxError: The requested module 'pdf-parse' does not provide an export named 'default'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:180:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:263:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:547:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.13.0
