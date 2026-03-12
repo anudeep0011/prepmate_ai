@@ -1,3 +1,0 @@
-[dotenv@17.2.3] injecting env (5) from .env -- tip: ≡ƒ¢á∩╕Å  run anywhere with `dotenvx run -- yourcommand`
-Server running on port 5000
-MongoDB Connected: ac-jqc88jf-shard-00-01.kuiuwhc.mongodb.net
