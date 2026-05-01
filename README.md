@@ -1,8 +1,9 @@
 # PrepMate AI 🚀
 
-> AI-powered interview preparation platform — with LLM evaluation pipelines, Dockerized deployment, and automated test coverage.
+> **AI-Powered Technical Interview Preparation Platform**  
+> LLM evaluation pipelines • Dockerized deployment • Automated test coverage
 
-PrepMate AI is a full-stack application that leverages **Google Gemini** and **OpenAI** to deliver personalized technical interview coaching. Beyond interview prep, the codebase serves as a real-world substrate for **LLM evaluation and SWE dataset construction** — aligning with current AI research needs.
+PrepMate AI is a full-stack web application that leverages **Google Gemini** and **OpenAI** to deliver personalized, adaptive technical interview coaching. The platform combines an intelligent interviewer, real-time code evaluation, and structured LLM performance assessment—making it ideal for both job seekers and LLM dataset construction.
 
 [![Python Tests](https://img.shields.io/badge/tests-pytest-blue)](./tests/)
 [![Docker](https://img.shields.io/badge/docker-ready-2496ED?logo=docker)](./Dockerfile)
@@ -13,177 +14,211 @@ PrepMate AI is a full-stack application that leverages **Google Gemini** and **O
 
 ## ✨ Features
 
-- **🤖 AI Interviewer** — Realistic technical & behavioral interview sessions via Gemini 1.5 Flash
-- **📄 Resume Parsing** — Upload resume; AI tailors questions to your specific experience
-- **💻 Integrated Code Editor** — Monaco Editor (same engine as VS Code) with real-time evaluation
-- **📈 LLM Response Evaluation** — Structured scoring of AI-generated code against test cases
-- **🧪 Verifiable SWE Tasks** — Auto-constructed tasks from public repo histories for LLM training datasets
-- **🔐 Secure Auth** — Email/Password + Google OAuth 2.0
-- **🌓 Dark/Light Mode** — Fully responsive modern UI
+- **🤖 AI Interviewer** — Conversational technical & behavioral interviews powered by Google Gemini 1.5 Flash
+- **📄 Resume-Aware Personalization** — Upload your resume; AI tailors questions to your specific background and experience
+- **💻 Integrated Code Editor** — Monaco Editor (VS Code engine) with real-time syntax highlighting and execution
+- **📊 LLM Response Evaluation** — Structured, verifiable scoring of AI-generated code against predefined test cases
+- **🧪 SWE Task Construction** — Auto-generated software engineering tasks from repository histories for LLM training datasets
+- **🔐 Enterprise Security** — Email/Password authentication + Google OAuth 2.0 with JWT sessions
+- **🌓 Dark/Light Mode** — Fully responsive, modern UI with theme persistence
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-| Tool | Purpose |
-|---|---|
-| React.js + Vite | UI framework & fast build tooling |
-| Monaco Editor | In-browser code editor |
-| Vanilla CSS | Responsive, modern styling |
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **UI Framework** | React 18.3 + Vite | Modern component-based UI with fast HMR |
+| **Code Editor** | Monaco Editor | Production-grade in-browser code editing |
+| **Styling** | Vanilla CSS | Lightweight, responsive design |
+| **Icons** | React Icons | Consistent, scalable iconography |
+| **Routing** | React Router v6 | Client-side navigation |
 
 ### Backend
-| Tool | Purpose |
-|---|---|
-| Node.js + Express.js | REST API server |
-| MongoDB + Mongoose | Data persistence |
-| JWT + BcryptJS | Auth & session security |
-| Helmet + Rate Limiter | API hardening |
+| Layer | Technology | Purpose |
+|-------|-----------|---------|
+| **Runtime** | Node.js + Express 5.2 | Scalable REST API server |
+| **Database** | MongoDB + Mongoose | Document storage with schema validation |
+| **Auth** | JWT + BcryptJS | Stateless, secure authentication |
+| **Security** | Helmet + Rate Limiter | API hardening & DDoS protection |
+| **Logging** | Morgan | HTTP request logging |
 
-### AI & LLM Integration
-| Tool | Purpose |
-|---|---|
-| Google Gemini 1.5 Flash | Interview question generation & feedback |
-| OpenAI API | Code evaluation & explanation |
-| Multer | Resume file upload handling |
+### AI & LLM
+| Service | Model | Purpose |
+|---------|-------|---------|
+| **Interview Generation** | Google Gemini 1.5 Flash | Natural language question creation & feedback |
+| **Code Evaluation** | OpenAI (GPT-4) | Code analysis, test execution insights |
+| **File Handling** | Multer + pdf-parse | Resume parsing and document uploads |
 
 ### DevOps & Testing
 | Tool | Purpose |
-|---|---|
-| Docker + Docker Compose | Containerized multi-service deployment |
-| pytest + pytest-asyncio | Python LLM evaluation test suite |
-| GitHub Actions (CI) | Automated test runs on push |
+|------|---------|
+| **Containerization** | Docker + Docker Compose | Multi-service orchestration |
+| **Python Testing** | pytest + pytest-asyncio | LLM evaluation suite |
+| **CI/CD** | GitHub Actions | Automated test runs on commit |
 
 ---
 
 ## 🧠 LLM Evaluation Pipeline
 
-PrepMate AI includes a Python-based evaluation layer for testing LLM performance on realistic software engineering tasks — directly applicable to LLM training dataset construction.
+PrepMate AI includes a sophisticated Python-based evaluation framework for assessing LLM performance on realistic software engineering tasks—directly applicable to **LLM training dataset curation and validation**.
+
+### Pipeline Architecture
 
 ```
 ┌──────────────────────────────────────────────┐
-│            LLM Eval Pipeline                  │
-│                                               │
-│  GitHub Issue → Task Constructor              │
-│       ↓                                       │
-│  SWE Task (patch + test_command)              │
-│       ↓                                       │
-│  LLM generates candidate solution             │
-│       ↓                                       │
-│  Automated test runner evaluates output       │
-│       ↓                                       │
-│  Structured result → Dataset record           │
+│        LLM Evaluation Pipeline               │
+├──────────────────────────────────────────────┤
+│                                              │
+│  GitHub Issue / PR                           │
+│       ↓                                      │
+│  Task Constructor                            │
+│  (language detection, test suite extraction) │
+│       ↓                                      │
+│  Verifiable SWE Task                         │
+│  (problem statement + test commands)         │
+│       ↓                                      │
+│  LLM Generates Solution                      │
+│       ↓                                      │
+│  Automated Test Runner                       │
+│  (validates correctness, performance)        │
+│       ↓                                      │
+│  Structured Result → Dataset Record          │
+│  (pass/fail, execution time, coverage)       │
+│                                              │
 └──────────────────────────────────────────────┘
 ```
 
-### Running the eval tests
+### Running Evaluation Tests
 
 ```bash
-# Install test dependencies
+# Install Python test dependencies
 pip install -r requirements-test.txt
 
-# Run the full LLM eval test suite
+# Run full test suite with verbose output
 pytest tests/ -v --tb=short
 
-# Run a specific test class
+# Run specific test class
 pytest tests/test_llm_eval.py::TestSWETaskConstruction -v
 
-# Run with coverage report
-pytest tests/ --cov=server --cov-report=term-missing
+# Generate coverage report
+pytest tests/ --cov=server --cov-report=html
 ```
 
-### Test coverage areas
+### Test Coverage
 
-| Test Class | What it validates |
+| Test Module | Validates |
 |---|---|
-| `TestLLMResponseEvaluation` | LLM code output passes test cases, correct format |
-| `TestSWETaskConstruction` | Verifiable task structure, serialization, language support |
-| `TestGitHubIssueTriage` | Issue classification, prioritization, actionability |
-| `TestAIServiceMocked` | AI service layer — prompt building, error handling (no real API calls) |
-| `TestDatasetQuality` | Dataset coverage across languages, difficulties, deduplication |
+| `TestLLMResponseEvaluation` | Code execution correctness, test case passing, structured response format |
+| `TestSWETaskConstruction` | Task serialization, language support, reproducibility |
+| `TestGitHubIssueTriage` | Issue classification, priority ranking, actionability metrics |
+| `TestAIServiceMocked` | Prompt construction, error recovery, token management (mocked) |
+| `TestDatasetQuality` | Language distribution, difficulty balance, deduplication |
 
 ---
 
 ## 🐳 Docker Deployment
 
-### Quick start (single container)
+### Single Container Deployment
 
 ```bash
-# Build and run
-docker build -t prepmate-ai .
+# Build image
+docker build -t prepmate-ai:latest .
+
+# Run container with environment variables
 docker run -p 5000:5000 \
-  -e MONGO_URI=your_mongo_uri \
-  -e JWT_SECRET=your_secret \
-  -e GEMINI_API_KEY=your_key \
-  -e OPENAI_API_KEY=your_key \
-  prepmate-ai
+  -e MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/prepmate \
+  -e JWT_SECRET=$(openssl rand -hex 32) \
+  -e GEMINI_API_KEY=your_gemini_key \
+  -e OPENAI_API_KEY=your_openai_key \
+  prepmate-ai:latest
 ```
 
-### Full stack with Docker Compose (recommended)
+### Multi-Service Stack (Recommended)
 
 ```bash
-# Copy and fill in your secrets
+# Prepare environment
 cp .env.example .env
+# → Edit .env with your credentials
 
-# Start MongoDB + App together
+# Build and start MongoDB + App
 docker compose up --build
 
 # Run in background
-docker compose up -d --build
+docker compose up -d
 
 # View logs
 docker compose logs -f app
 
-# Stop everything
+# Stop all services
 docker compose down
 ```
 
-The compose setup includes:
-- **MongoDB 7** with persistent volume and healthcheck
-- **Express app** with automatic restart and dependency ordering
-- **Health endpoint** at `GET /api/health`
+**Docker Compose includes:**
+- ✅ MongoDB 7 with persistent volume & health checks
+- ✅ Express app with auto-restart policy
+- ✅ Service dependency ordering
+- ✅ Health endpoint: `GET /api/health`
 
 ---
 
-## 🚀 Getting Started (Local Dev)
+## 🚀 Getting Started (Local Development)
 
 ### Prerequisites
-- Node.js v18+
-- Python 3.10+ (for eval tests)
-- MongoDB (local or Atlas)
-- Gemini API Key + OpenAI API Key
 
-### Installation
+- **Node.js** v18 or higher
+- **Python** 3.10+ (for evaluation tests)
+- **MongoDB** (local instance or MongoDB Atlas cloud)
+- **API Keys:**
+  - Google Gemini API key ([get it here](https://makersuite.google.com/app/apikey))
+  - OpenAI API key ([get it here](https://platform.openai.com/account/api-keys))
+  - Google OAuth 2.0 credentials ([console.cloud.google.com](https://console.cloud.google.com))
+
+### Installation & Setup
 
 ```bash
-# 1. Clone the repo
+# 1. Clone repository
 git clone https://github.com/anudeep0011/prepmate_ai.git
 cd prepmate_ai
 
-# 2. Install frontend + root deps
+# 2. Install root dependencies
 npm install
 
-# 3. Install server deps
-cd server && npm install && cd ..
+# 3. Install server dependencies
+cd server
+npm install
+cd ..
 
-# 4. Set up environment variables
+# 4. Configure environment
 cp .env.example server/.env
-# → Fill in MONGO_URI, JWT_SECRET, GEMINI_API_KEY, OPENAI_API_KEY, GOOGLE_CLIENT_ID
 
-# 5. Run frontend + backend concurrently
+# 5. Add your credentials to server/.env
+# Required:
+#   - MONGO_URI: MongoDB connection string
+#   - JWT_SECRET: Random 32-byte hex string for token signing
+#   - GEMINI_API_KEY: Google Gemini API key
+#   - OPENAI_API_KEY: OpenAI API key
+#   - GOOGLE_CLIENT_ID: OAuth client ID
+
+# 6. Start frontend + backend (concurrent)
 npm run dev
 ```
 
-### Environment Variables
+**Frontend:** http://localhost:5173  
+**Backend API:** http://localhost:5000
 
-| Variable | Required | Description |
-|---|---|---|
-| `MONGO_URI` | ✅ | MongoDB connection string |
-| `JWT_SECRET` | ✅ | Secret for JWT signing |
-| `GEMINI_API_KEY` | ✅ | Google Gemini API key |
-| `OPENAI_API_KEY` | ✅ | OpenAI API key |
-| `GOOGLE_CLIENT_ID` | ✅ | Google OAuth client ID |
-| `PORT` | Optional | Server port (default: 5000) |
+### Environment Variables Reference
+
+| Variable | Required | Type | Default | Description |
+|----------|----------|------|---------|-------------|
+| `MONGO_URI` | ✅ | String | — | MongoDB connection string (Atlas or local) |
+| `JWT_SECRET` | ✅ | String | — | Secret for signing JWTs (min 32 chars recommended) |
+| `GEMINI_API_KEY` | ✅ | String | — | Google Generative AI API key |
+| `OPENAI_API_KEY` | ✅ | String | — | OpenAI API key (GPT-4 recommended) |
+| `GOOGLE_CLIENT_ID` | ✅ | String | — | Google OAuth 2.0 client ID |
+| `PORT` | ❌ | Number | `5000` | Express server port |
+| `NODE_ENV` | ❌ | String | `development` | Environment mode |
 
 ---
 
@@ -193,41 +228,125 @@ npm run dev
 prepmate_ai/
 ├── Dockerfile                  # Multi-stage production build
 ├── docker-compose.yml          # MongoDB + App orchestration
-├── pytest.ini                  # Python test config
+├── pytest.ini                  # Python pytest configuration
 ├── requirements-test.txt       # Python test dependencies
+│
 ├── tests/
-│   └── test_llm_eval.py        # LLM evaluation & SWE task test suite
+│   └── test_llm_eval.py       # LLM evaluation & task construction tests
+│
 ├── server/                     # Express.js backend
-│   ├── config/                 # DB and app config
-│   ├── controllers/            # API route handlers
-│   ├── models/                 # Mongoose schemas
-│   ├── routes/                 # REST endpoints
-│   └── services/               # AI integrations (Gemini, OpenAI)
-├── src/                        # React frontend
-│   ├── components/             # Reusable UI components
-│   ├── context/                # Theme + Auth state
-│   ├── hooks/                  # Custom React hooks
-│   └── pages/                  # App views
-└── public/                     # Static assets
+│   ├── config/                # Database & app configuration
+│   ├── controllers/           # Route handler logic
+│   ├── models/                # MongoDB schemas (Mongoose)
+│   ├── routes/                # REST API endpoints
+│   ├── services/              # AI integrations (Gemini, OpenAI)
+│   ├── middleware/            # Auth, error handling
+│   └── server.js              # Express app entry point
+│
+├── src/                        # React.js frontend
+│   ├── components/            # Reusable UI components
+│   ├── context/               # Global state (Auth, Theme)
+│   ├── hooks/                 # Custom React hooks
+│   ├── pages/                 # Route-based page components
+│   ├── utils/                 # Helper functions & API calls
+│   ├── App.jsx                # Root component
+│   └── main.jsx               # React entry point
+│
+├── public/                    # Static assets (favicon, etc.)
+├── index.html                 # HTML template
+├── vite.config.js             # Vite build configuration
+├── package.json               # Root dependencies
+└── .env.example               # Environment variable template
 ```
+
+---
+
+## 🔧 Available Scripts
+
+### Root Level
+```bash
+npm run dev          # Start Vite dev server + backend concurrently
+npm run build        # Build React app for production
+npm run preview      # Preview production build locally
+npm run lint         # Run ESLint on codebase
+```
+
+### Backend (server/)
+```bash
+npm run start        # Run Express server directly
+npm run server       # Run with nodemon (auto-restart)
+```
+
+### Testing
+```bash
+pytest tests/ -v                    # Run all eval tests
+pytest tests/ --cov=server          # Generate coverage report
+pytest tests/test_llm_eval.py -k TestSWETaskConstruction -v
+```
+
+---
+
+## 📋 API Endpoints
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `POST` | `/api/auth/register` | User signup | — |
+| `POST` | `/api/auth/login` | Email/password login | — |
+| `POST` | `/api/auth/google` | Google OAuth login | — |
+| `GET` | `/api/user/profile` | Get user profile | ✅ |
+| `POST` | `/api/interview/start` | Initiate interview session | ✅ |
+| `POST` | `/api/interview/feedback` | Get AI feedback on response | ✅ |
+| `POST` | `/api/code/execute` | Run code against test cases | ✅ |
+| `POST` | `/api/resume/upload` | Upload and parse resume | ✅ |
+| `GET` | `/api/health` | Service health check | — |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please open an issue first to discuss what you'd like to change.
+We welcome contributions! Please follow these steps:
 
-```bash
-# Run tests before submitting a PR
-pytest tests/ -v
-```
+1. **Open an Issue** — Describe the feature or bug fix first
+2. **Fork the Repository** — Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. **Make Changes** — Write clean, well-tested code
+4. **Run Tests** — Ensure all tests pass: `pytest tests/ -v`
+5. **Commit** — Use clear commit messages
+6. **Push & Create PR** — Link your PR to the issue
+
+### Contribution Guidelines
+- Follow the existing code style
+- Add tests for new features
+- Update documentation as needed
+- Keep commits atomic and descriptive
 
 ---
 
-## 📄 License
+## 📝 License
 
-MIT License — see [LICENSE](./LICENSE) for details.
+This project is licensed under the **MIT License**—see the [LICENSE](./LICENSE) file for details.
+
+Permission is granted to use this software freely for personal and commercial purposes with proper attribution.
+
+---
+
+## 🙋 Support & Questions
+
+- **Issues** — Report bugs via [GitHub Issues](https://github.com/anudeep0011/prepmate_ai/issues)
+- **Discussions** — Ask questions in [GitHub Discussions](https://github.com/anudeep0011/prepmate_ai/discussions)
+- **Author** — [@anudeep0011](https://github.com/anudeep0011)
+
+---
+
+## 🚀 Roadmap
+
+- [ ] Multi-language code editor support (Java, C++, Go)
+- [ ] Live coding sessions with real interviewers
+- [ ] Behavioral interview video recording & playback
+- [ ] Personalized study recommendations based on performance
+- [ ] Integration with LeetCode and HackerRank
+- [ ] Mobile app (React Native)
 
 ---
 
 Built with ❤️ by [Anudeep](https://github.com/anudeep0011)
+
